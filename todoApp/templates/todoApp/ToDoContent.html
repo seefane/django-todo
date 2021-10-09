@@ -1,0 +1,45 @@
+{% extends "todoApp/base.html" %}
+{% block content %}
+          <div>
+            <h4 class="mb-2">ToDo Actions</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Date Added</th>
+                  <th>ToDo Title</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Action</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for task in tasks %}
+                <tr>
+                  <td>{{task.date_created | date:"j M Y, P" }} </td>
+                  <td>{{task.title}}</td>
+                  <td>
+                    {{task.description}}
+                  </td>
+                  <td>
+                    {{task.status}}
+                  </td>
+                  <td> {{task.due_date | date:"j M Y, P"}} </td>
+                  <td>
+                    <a class="btn btn-success" >
+                      <i class="fas fa-pencil-alt"></i>
+                    </a>
+                    <a class="btn btn-danger" >
+                      <i class="fas fa-trash"></i>
+
+                    </a>
+                  </td>
+                </tr>
+                 {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+{% endblock content %}

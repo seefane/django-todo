@@ -1,0 +1,23 @@
+{% extends "todoApp/base.html" %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+                 <div class="d-flex justify-content-center row mt-out mt-5 d-flex ">
+                    <div class="col-4 border">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group ">
+                                <legend class="SingUp">Sign In</legend>
+                                {{ form |crispy}}
+                            </fieldset>
+                            <div class="form-group py-2">
+                                <button class="btn btn-outline-success align-items-center" type="submit">Submit</button>
+                            </div>
+                     </form>
+                <div>
+                    <p>Don't have an account? <a href="{% url 'registration'%}">Sign Up</a></p>
+                </div>                    </div>
+                 </div>
+
+
+
+    {% endblock content %}

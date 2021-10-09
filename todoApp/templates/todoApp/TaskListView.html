@@ -1,0 +1,91 @@
+{% extends "todoApp/base.html" %}
+{% load static %}
+{% block head %}
+    <link rel='stylesheet' href="{% static 'pagination.css' %}">
+{% endblock %}
+{% block content %}
+          {% if tasks|length == 0 %}
+            <h3>You have no tasks</h3>
+
+            <a  href="{% url 'create-task' %}">
+              <button type="button" class="btn btn-success btn-xs">Add Task <i class="fas fa-plus"></i></button>
+            </a>
+          {%else%}
+          <div>
+            <h4 class="mb-2">ToDo Actions</h4>
+              <a  href="{% url 'create-task' %}">
+              <button type="button" class="btn btn-success btn-xs">Add Task <i class="fas fa-plus"></i></button>
+            </a>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Date Added</th>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Action</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for task in tasks %}
+                <tr >
+                  <td style="width:12.5%">{{task.date_created | date:"j M Y, P" }} </td>
+                  <td style="width:15%">{{task.title}}</td>
+                  <td style="width:30%">{{task.description}}</td>
+                  <td style="width:10%">{{task.status}}</td>
+                  <td style="width:12.5%"> {{task.due_date | date:"j M Y, P"}} </td>
+                  <td style="width:15%"><a class="btn btn-success"  href="{% url 'task-update' task.id %}" >
+                    <i class="fas fa-pencil-alt"></i></a>
+                    <a class="btn btn-danger"  href="{% url 'task-delete' task.id %}" >
+                      <i class="fas fa-trash"></i></a>
+                  </td>
+                </tr>
+                 {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+          {%endif%}
+          {% if is_paginated %}
+                <ul class="list-group list-group-horizontal mt-2 justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="list-group-item"><a href="?page=1">1</a></li>
+                        <li class="list-group-item">
+                            <a href="?page={{ page_obj.previous_page_number}}">
+                                <i class="fa fa-angle-double-left text-info"></i></li>
+                            </a>
+
+
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="list-group-item bg-info text-white">
+                            <a href="?page={{ num}}">{{ num}}</a> </li>
+                            {% elif num > page_obj.number|add:'-2' and num < page_obj.number|add:'2' %}
+                            <li class="list-group-item ">
+                            <a href="?page={{ num}}">{{ num}}</a> </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="list-group-item">
+                            <a href="?page={{ page_obj.next_page_number }}">
+                                <i class="fa fa-angle-double-right text-info"></i>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a  href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        </li>
+                    {% endif %}
+
+<!--                <li class="list-group-item">3</li>-->
+<!--                <li class="list-group-item">4</li>-->
+<!--                <li class="list-group-item"><i class="fa fa-angle-double-right text-info"></i></li>-->
+                </ul>
+
+          {% endif %}
+{% endblock content %}

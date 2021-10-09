@@ -1,0 +1,23 @@
+{% extends "todoApp/base.html" %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+                 <div class="d-flex justify-content-center row mt-out mt-5 d-flex ">
+                    <div class="col-4 border">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group ">
+                                <legend class="SingUp"><i class="fas fa-exclamation-triangle"></i>Warming!!</legend>
+                                 <h>Are you sure you want to delete the task "{{object.title}}"</h>
+                            </fieldset>
+                            <div class="form-group py-2">
+                                <button class="btn btn-outline-danger align-items-center" type="submit">Yes</button>
+                                <a class="btn btn-outline-secondary" href="{% url 'todoHome'%}">No</a>
+                                <a></a>
+                            </div>
+                     </form>
+                    </div>
+                 </div>
+
+
+
+    {% endblock content %}

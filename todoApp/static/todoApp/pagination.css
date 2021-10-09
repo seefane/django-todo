@@ -1,0 +1,13 @@
+.list-group-item{
+      border-radius: 50% !important;
+      background: #fff;
+      margin: 10px;
+      cursor: pointer;
+}
+.list-group-item:hover{
+      background: #ddd;
+}
+.fa{
+      font-size: 18px;
+      font-weight: 600;
+ }

@@ -1,0 +1,30 @@
+{% extends "todoApp/base.html" %}
+    {% load crispy_forms_tags %}
+    {% block head %}
+        {% load bootstrap4 %}
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+        {{ form.media }}
+    {% endblock head %}
+    {% block content %}
+                 <div class="d-flex justify-content-center row mt-out mt-5 d-flex ">
+                    <div class="col-4 border">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <fieldset class="form-group ">
+                                <legend >New Task</legend>
+                                {% bootstrap_form form %}
+
+                            </fieldset>
+                            {% buttons %}
+                            <div class="form-group py-2">
+                                <button class="btn btn-outline-success align-items-center" type="submit">Submit</button>
+                            </div>
+                            {% endbuttons %}
+                     </form>
+                    </div>
+                 </div>
+
+
+
+    {% endblock content %}
