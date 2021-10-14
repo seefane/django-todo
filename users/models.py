@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -16,19 +17,12 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     bio = models.TextField(blank=True)
-    image = models.ImageField(default= "default.png")
+    image = CloudinaryField('image')
 
     def __str__(self):
         return self.user.username + " Profile"
 
-    # def save(self):
-    #     super().save()
-    #
-    #     imag = Image.open(self.image.path)
-    #     if imag.height >400 or imag.width >400:
-    #         output_size = imag(400,400)
-    #         imag.thumbnail(output_size)
-    #         imag.save(self.image.path)
+
 
 
 

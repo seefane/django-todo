@@ -25,6 +25,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'todoHome' %}">Home</a>
           </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'schema-swagger-ui' %}">REST API</a>
+          </li>
 
 
       </ul>
@@ -32,8 +35,12 @@
             <li class="nav-item dropdown ">
 
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% if user.is_authenticated %}
-                  <img src={{user.profile.image.url}} width="40" height="40" class="rounded-circle">
+                {% if user.is_authenticated  %}
+                          {% if user.profile.image == 'default.png'  %}
+                              <i class="far fa-user-circle"></i>
+                          {% else %}
+                            <img src={{user.profile.image.url}} width="40" height="40" class="rounded-circle">
+                        {% endif %}
                 {% else %}
                   <i class="far fa-user-circle"></i>
                 {% endif %}

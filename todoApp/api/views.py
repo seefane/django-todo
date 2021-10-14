@@ -117,21 +117,14 @@ class ApiDeleteTask(DestroyAPIView):
         task.delete()
         return Response('Task Deleted',status=status.HTTP_200_OK)
 
-class ApiUpdateTask(APIView):
-
+class ApiUpdateTask(UpdateAPIView):
+    queryset = Task.objects.all()
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
     serializer_class = TodoSerializer
 
 
 
-    def put(self, request, pk, format=None):
-        task = get_object_or_404(Task,pk=pk)
-        serializer = TodoSerializer(task, data=request.data)
-        print(request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 

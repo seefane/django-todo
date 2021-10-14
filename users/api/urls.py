@@ -6,7 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    path('registration/',views.ApiCreateTask.as_view(),name='registration'),
+    path('registration/',views.ApiUserReg.as_view(),name='registration'),
     path('login/',obtain_auth_token,name='login'),
 
 ]

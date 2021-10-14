@@ -14,7 +14,9 @@ from pathlib import Path
 import environ
 import dj_database_url
 
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 env = environ.Env()
 environ.Env.read_env()
@@ -26,7 +28,6 @@ from django.conf.urls.static import static
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -36,8 +37,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG')
 
-ALLOWED_HOSTS = ["10.0.2.2","127.0.0.1","djangotodoapp2.herokuapp.com"]
-
+ALLOWED_HOSTS = ["10.0.2.2", "127.0.0.1", "djangotodoapp2.herokuapp.com"]
 
 # Application definition
 
@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_filters',
     'drf_yasg',
-
+    'cloudinary',
 
 ]
 
@@ -71,31 +71,33 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 2,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
-
 }
 SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': False,
     'DOC_EXPANSION': 'list',
     'APIS_SORTER': 'alpha',
     'JSON_EDITOR': True,
     'api_version': '0.1',
-    'SUPPORTED_SUBMIT_METHODS': [
-        'get',
-        'post',
-    ],
+    'LOGOUT_URL': 'logout',
+    'LOGIN_URL': 'login',
+
     'SECURITY_DEFINITIONS': {
         "api_key": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header",
 
-            "description": "Token authorization"+"\n"+ "Value example :Token 77ca3c2b7921c3f1428f1418c197d8decbbb6263",
+            "description": "Token authorization" + "\n" + "Value example :Token 77ca3c2b7921c3f1428f1418c197d8decbbb6263",
 
         },
     },
 }
 
-
+cloudinary.config(
+    cloud_name=os.environ.get('CLOUD_NAME'),
+    api_key=os.environ.get('API_KEY'),
+    api_secret=os.environ.get('API_SECRET'),
+    secure=True
+)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -129,7 +131,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'to_do.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -139,7 +140,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -159,7 +159,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -173,7 +172,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -182,8 +180,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -193,9 +191,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'todoHome'
-LOGIN_URL ='login'
+LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
-
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)

@@ -29,7 +29,7 @@ def registration_view(request):
 
 
 
-class ApiCreateTask(CreateAPIView):
+class ApiUserReg(CreateAPIView):
     serializer_class = RegistrationSerializer
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
