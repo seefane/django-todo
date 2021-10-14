@@ -3,26 +3,31 @@
     {% block content %}
 
 
-        <!-- <div class="container mt-5 d-flex justify-content-center">
+        <div class="container mt-5 d-flex justify-content-center">
             <div class="card p-3">
                 <div class="d-flex align-items-center">
-                    <div class="image">
-                        {% if user.profile.image == 'default.png'  %}
-                            <i class="far fa-user-circle"></i>
-                        {% else %}
-                          <img src={{user.profile.image.url}} width="40" height="40" class="rounded-circle">
-                        {%endif%}
+                     {% if user.profile.image %}
+                              <img src={{user.profile.image.url}} width="40"
+                                 alt="https://res.cloudinary.com/dg1y6ou2d/image/upload/v1634211838/user_gdriaq.png"
+                                 height="40" class="rounded-circle">
+
+                          {% else %}
+                            <img src="https://res.cloudinary.com/dg1y6ou2d/image/upload/v1633818887/sample.jpg" width="40"
+                                 alt="Image not available"
+                                 height="40" class="rounded-circle">
+                        {% endif %}
                     <div class="ml-3 w-100">
                         <h4 class="mb-0 mt-0">{{user.first_name}}  {{user.last_name}}</h4>
                         <div class="px-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
                                {{user.profile.bio}}
 
                         </div>
-                        <div class="button mt-2 d-flex flex-row justify-content-center"> <a href="{% url 'editprofile'%}"><i class="far fa-edit"></i>Edit</a> </div>
+                        <div class="button mt-2 d-flex flex-row justify-content-center">
+                            <a href="{% url 'editprofile'%}"><i class="far fa-edit"></i>Edit</a> </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
 
 
     {% endblock content %}

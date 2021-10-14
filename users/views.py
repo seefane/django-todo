@@ -2,6 +2,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm, UserProfileForm, UpdateUserForm
+from .models import Profile
+from cloudinary.forms import cl_init_js_callbacks
 
 
 def register(request):
@@ -21,11 +23,13 @@ def register(request):
 
 @login_required
 def profile(request):
+    print(Profile.objects.filter(user=request.user)[0].image.url)
     return render(request, 'users/profile.html')
 
 
 @login_required
 def editProfile(request):
+
     curr_user = request.user
     if request.method == 'POST':
         upProfile = UserProfileForm(request.POST,request.FILES,instance=curr_user.profile)

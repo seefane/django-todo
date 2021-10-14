@@ -1,11 +1,13 @@
 {% extends "todoApp/base.html" %}
     {% load cloudinary %}
+{% cloudinary_includes %}
+{% cloudinary_js_config %}
 
     {% load crispy_forms_tags %}
     {% block content %}
         <div class="d-flex justify-content-center row mt-out">
-                    <div class="col-4 border">
-                        <form method="POST">
+                    <div class="col-4 border" >
+                        <form method="POST" enctype="multipart/form-data"   >
                             {% csrf_token %}
                             <fieldset class="form-group">
                                 <legend class="User Profile">Update User Details</legend>

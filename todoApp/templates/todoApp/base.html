@@ -36,10 +36,13 @@
 
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if user.is_authenticated  %}
-                          {% if user.profile.image == 'default.png'  %}
-                              <i class="far fa-user-circle"></i>
+                          {% if user.profile.image %}
+                              <img src={{user.profile.image.url}} width="40"
+                                 alt="https://res.cloudinary.com/dg1y6ou2d/image/upload/v1634211838/user_gdriaq.png"
+                                 height="40" class="rounded-circle">
+
                           {% else %}
-                            <img src={{user.profile.image.url}} width="40" height="40" class="rounded-circle">
+                            <i class="far fa-user-circle"></i>
                         {% endif %}
                 {% else %}
                   <i class="far fa-user-circle"></i>
